@@ -18,9 +18,7 @@ ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) '\
 
 class Amazon:
     def check_stock(self,page_url):
-
-          
-
+        
         stock = 'none'
         while True:
             req = urllib.request.Request(page_url, headers={'User-Agent': ua})
