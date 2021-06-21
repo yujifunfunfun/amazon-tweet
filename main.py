@@ -1,6 +1,6 @@
 import setteings
 import tweepy
-import requests
+import urllib.request
 import bs4
 import time
 
@@ -12,16 +12,20 @@ ATS = setteings.ATS
 auth = tweepy.OAuthHandler(CSK,CSS)
 auth.set_access_token(AST, ATS)
 api = tweepy.API(auth)
-
+ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) '\
+'AppleWebKit/537.36 (KHTML, like Gecko) '\
+'Chrome/55.0.2883.95 Safari/537.36 '
 
 class Amazon:
     def check_stock(self,page_url):
-        res = requests.get(page_url)
-        soup = bs4.BeautifulSoup(res.text, features="html.parser")
-        selected_html = soup.select('#add-to-cart-button')
+
+          
 
         stock = 'none'
         while True:
+            req = urllib.request.Request(page_url, headers={'User-Agent': ua})
+            html = urllib.request.urlopen(req)
+            soup = bs4.BeautifulSoup(html, "html.parser")
             selected_html = soup.select('#add-to-cart-button')
 
             if selected_html and stock == 'none':
